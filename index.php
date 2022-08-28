@@ -6,7 +6,7 @@ $posts = getAllPosts();
 ?>
 
 <head>
-	<title>Future Imperfect by php5 UP</title>
+	<title>Rollin Kazan</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
@@ -29,7 +29,7 @@ $posts = getAllPosts();
 			<?php
 			for ($i = count($posts); $i > 0; $i--) :
 				$post = $posts[$i - 1];
-				$post_image = $post['image_path'] == NULL ? '../images/pic01.jpg' : $post['image_path'];
+				$post_image = $post['image_path'] == NULL ? '../images/picplug.jpg' : $post['image_path'];
 				$post_url = 'single.php?id=' . $post['id'];
 				$user_url = 'person_blog.php?user_id=' . $post['user_id'];
 				$delete_url = 'database/delete_post.php?id=' . $post['id'];
@@ -49,16 +49,16 @@ $posts = getAllPosts();
 					<p><?= word_teaser($post['description'], 70); ?></p>
 					<footer>
 						<ul class="actions">
-							<li><a href=<?= $post_url; ?> class="button large">Продолжить чтение</a></li>
+							<li><a href=<?= $post_url; ?> class="button large">Узнать больше</a></li>
 							<?php if ($_SESSION['user_id'] == $user['id'] || $_SESSION['role'] == 'admin') : ?>
 								<li><a href="<?= $delete_url ?>" class="button large">Удалить запись</a></li>
 							<? endif ?>
 						</ul>
 						<ul class="stats">
 							<!-- <li><a href="#">Главная</a></li> -->
-							<li><a href="#" class="icon solid fa-users"><?= count(getRecordUsersByIdGame($post["id"])) . "/" . $post['record']?></a></li>
-							<li><a href="#" class="icon solid fa-ruble-sign"><?= $post['price']?></a></li>
-							<li><a href="#" class="icon solid fa-comment"><?= count(getCommByIdPost($post['id'])) ?></a></li>
+							<li><a style="font-size: medium;" href="#" class="icon solid fa-users"><?= count(getRecordUsersByIdGame($post["id"])) . "/" . $post['record']?></a></li>
+							<li><a style="font-size: medium;" href="#" class="icon solid fa-ruble-sign"><?= $post['price']?></a></li>
+							<li><a style="font-size: medium;" href="#" class="icon solid fa-comment"><?= count(getCommByIdPost($post['id'])) ?></a></li>
 						</ul>
 					</footer>
 				</article>
