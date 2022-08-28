@@ -1,4 +1,9 @@
 <html>
+<?php
+include('database/db-connection.php');
+require('database/get-function.php');
+$posts = getAllPosts();
+?>
 
 <head>
 	<title>Future Imperfect by php5 UP</title>
@@ -21,60 +26,46 @@
 		<!-- Main -->
 		<div id="main">
 
-			<!-- Post -->
-			<article class="post">
-				<header>
-					<div class="title">
-						<h2><a href="single.php">Magna sed adipiscing</a></h2>
-						<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
-					</div>
-					<div class="meta">
-						<time class="published" datetime="2015-11-01">November 1, 2015</time>
-						<a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
-					</div>
-				</header>
-				<a href="single.php" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-				<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-				<footer>
-					<ul class="actions">
-						<li><a href="single.php" class="button large">Continue Reading</a></li>
-					</ul>
-					<ul class="stats">
-						<li><a href="#">General</a></li>
-						<li><a href="#" class="icon solid fa-heart">28</a></li>
-						<li><a href="#" class="icon solid fa-comment">128</a></li>
-					</ul>
-				</footer>
-			</article>
+			<?php
+			for ($i = count($posts); $i > 0; $i--) :
+				$post = $posts[$i - 1];
+				$post_image = $post['image_path'] == NULL ? '../images/pic01.jpg' : $post['image_path'];
+				$post_url = 'single.php?id=' . $post['id'];
+				$user_url = 'person_blog.php?user_id=' . $post['user_id'];
+				$delete_url = 'database/delete_post.php?id=' . $post['id'];
+				$user = getUserById($post['id_master']);
+			?>
+				<article class="post">
+					<header>
+						<div class="title">
+							<h2><a href=<?= $post_url; ?>><?= word_teaser($post['title'], 10); ?></a></h2>
+						</div>
+						<div class="meta">
+							<time class="published" datetime="<?= formatDate($post['beginning_game']) ?>"><?= formatDate($post['end_game']) ?></time>
+							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $user['name'] ?></span><img src=<?= getImageUserPath($user['id']) ?> alt="" /></a>
+						</div>
+					</header>
+					<a href=<?= $post_url; ?> class="image featured"><img src=<?= $post_image; ?> alt="" height="500px" ; style=" object-fit:cover;" /></a>
+					<p><?= word_teaser($post['description'], 70); ?></p>
+					<footer>
+						<ul class="actions">
+							<li><a href=<?= $post_url; ?> class="button large">Продолжить чтение</a></li>
+							<?php if ($_SESSION['user_id'] == $user['id'] || $_SESSION['role'] == 'admin') : ?>
+								<li><a href="<?= $delete_url ?>" class="button large">Удалить запись</a></li>
+							<? endif ?>
+						</ul>
+						<ul class="stats">
+							<!-- <li><a href="#">Главная</a></li> -->
+							<li><a href="#" class="icon solid fa-users"><?= count(getRecordUsersByIdGame($post["id"])) . "/" . $post['record']?></a></li>
+							<li><a href="#" class="icon solid fa-ruble-sign"><?= $post['price']?></a></li>
+							<li><a href="#" class="icon solid fa-comment"><?= count(getCommByIdPost($post['id'])) ?></a></li>
+						</ul>
+					</footer>
+				</article>
+			<?php endfor ?>
 
 			<!-- Post -->
-			<article class="post">
-				<header>
-					<div class="title">
-						<h2><a href="single.php">Ultricies sed magna euismod enim vitae gravida</a></h2>
-						<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
-					</div>
-					<div class="meta">
-						<time class="published" datetime="2015-10-25">October 25, 2015</time>
-						<a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
-					</div>
-				</header>
-				<a href="single.php" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-				<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper.</p>
-				<footer>
-					<ul class="actions">
-						<li><a href="single.php" class="button large">Continue Reading</a></li>
-					</ul>
-					<ul class="stats">
-						<li><a href="#">General</a></li>
-						<li><a href="#" class="icon solid fa-heart">28</a></li>
-						<li><a href="#" class="icon solid fa-comment">128</a></li>
-					</ul>
-				</footer>
-			</article>
-
-			<!-- Post -->
-			<article class="post">
+			<!-- <article class="post">
 				<header>
 					<div class="title">
 						<h2><a href="single.php">Euismod et accumsan</a></h2>
@@ -97,7 +88,7 @@
 						<li><a href="#" class="icon solid fa-comment">128</a></li>
 					</ul>
 				</footer>
-			</article>
+			</article> -->
 
 			<!-- Post -->
 			<!--
@@ -423,8 +414,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		<!-- Sidebar 
 		<section id="sidebar"> -->
 
-			<!-- Intro -->
-			<!-- <section id="intro">
+		<!-- Intro -->
+		<!-- <section id="intro">
 				<a href="#" class="logo"><img src="images/logo.jpg" alt="" /></a>
 				<header>
 					<h2>Future Imperfect</h2>
@@ -432,12 +423,12 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				</header>
 			</section> -->
 
-			<!-- Mini Posts 
+		<!-- Mini Posts 
 			<section>
 				<div class="mini-posts"> -->
 
-					<!-- Mini Post -->
-					<!-- <article class="mini-post">
+		<!-- Mini Post -->
+		<!-- <article class="mini-post">
 						<header>
 							<h3><a href="single.php">Vitae sed condimentum</a></h3>
 							<time class="published" datetime="2015-10-20">October 20, 2015</time>
@@ -448,8 +439,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				</div>
 			</section> -->
 
-			<!-- Posts List -->
-			<!-- <section>
+		<!-- Posts List -->
+		<!-- <section>
 								<ul class="posts">
 									<li>
 										<article>
@@ -499,8 +490,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 								</ul>
 							</section> -->
 
-			<!-- About -->
-			<!-- <section class="blurb">
+		<!-- About -->
+		<!-- <section class="blurb">
 								<h2>About</h2>
 								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
 								<ul class="actions">
@@ -508,8 +499,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 								</ul>
 							</section> -->
 
-			<!-- Footer -->
-			<!-- <section id="footer">
+		<!-- Footer -->
+		<!-- <section id="footer">
 								<ul class="icons">
 									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
