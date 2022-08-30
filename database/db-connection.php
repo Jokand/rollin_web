@@ -1,5 +1,4 @@
 <?php
-session_start();
 $user = "root";
 $pass = "";
 $db = "rollin";
