@@ -12,13 +12,8 @@ $post_image = $post['image_path'] == NULL ? '../images/picplug.jpg' : $post['ima
 $delete_url = 'database/delete_post.php?id=' . $post['id'];
 $user = getUserById($post['id_master']);
 ?>
-<html>
-<head>
-	<title>Rollin Kazan</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-</head>
+
+<?php include('php-elements/head.php'); ?>
 
 <body class="single is-preload">
 
@@ -42,9 +37,9 @@ $user = getUserById($post['id_master']);
 						<p><?= $post['setting'] . "<br>" . $post['system'] . "<br>" . $post['genre'] ?></p>
 					</div>
 					<div class="meta">
-						<time class="published" datetime="2015-11-01">November 1, 2015</time>
-						<time class="published" datetime="2015-11-01">November 1, 2015</time>
-						<a href="#" class="author"><span class="name"><?=$user["name"]?></span><img src="images/avatar.jpg" alt="" /></a>
+						<time class="published" datetime="<?= formatDate($post['beginning_game'])?>"><?= formatDate($post['beginning_game'])?></time>
+						<time class="published" datetime="<?= formatDate($post['end_game'])?>"><?= formatDate($post['end_game'])?></time>
+						<a href="<?='profile.php?user_id=' . $post['id_master'];?>" class="author"><span class="name"><?=$user["name"]?></span><img src="images/avatar.jpg" alt="" /></a>
 					</div>
 				</header>
 				<span class="image featured"><img src=<?= $post_image ?> alt="" /></span>
