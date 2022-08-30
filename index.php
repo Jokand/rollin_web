@@ -1,16 +1,12 @@
 <html>
 <?php
 include('database/db-connection.php');
-require('database/get-function.php');
+include('database/get-function.php');
+include('database/update-session.php');
 $posts = getAllPosts();
 ?>
 
-<head>
-	<title>Rollin Kazan</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-</head>
+<?php include('php-elements/head.php'); ?>
 
 <body class="is-preload">
 
@@ -25,13 +21,13 @@ $posts = getAllPosts();
 
 		<!-- Main -->
 		<div id="main">
-
+			<h2 style="font-size: 1.7em; display: flex; justify-content: center">Август</h2>
 			<?php
 			for ($i = count($posts); $i > 0; $i--) :
 				$post = $posts[$i - 1];
 				$post_image = $post['image_path'] == NULL ? '../images/picplug.jpg' : $post['image_path'];
 				$post_url = 'single.php?id=' . $post['id'];
-				$user_url = 'person_blog.php?user_id=' . $post['user_id'];
+				$user_url = 'profile.php?user_id=' . $post['id_master'];
 				$delete_url = 'database/delete_post.php?id=' . $post['id'];
 				$user = getUserById($post['id_master']);
 			?>
@@ -56,8 +52,8 @@ $posts = getAllPosts();
 						</ul>
 						<ul class="stats">
 							<!-- <li><a href="#">Главная</a></li> -->
-							<li><a style="font-size: medium;" href="#" class="icon solid fa-users"><?= count(getRecordUsersByIdGame($post["id"])) . "/" . $post['record']?></a></li>
-							<li><a style="font-size: medium;" href="#" class="icon solid fa-ruble-sign"><?= $post['price']?></a></li>
+							<li><a style="font-size: medium;" href="#" class="icon solid fa-users"><?= count(getRecordUsersByIdGame($post["id"])) . "/" . $post['record'] ?></a></li>
+							<li><a style="font-size: medium;" href="#" class="icon solid fa-ruble-sign"><?= $post['price'] ?></a></li>
 							<li><a style="font-size: medium;" href="#" class="icon solid fa-comment"><?= count(getCommByIdPost($post['id'])) ?></a></li>
 						</ul>
 					</footer>

@@ -12,7 +12,7 @@
         <ul class="links">
             <li>
                 <a href="#">
-                    <h3>Lorem ipsum</h3>
+                    <h3>Главная</h3>
                     <p>Feugiat tempus veroeros dolor</p>
                 </a>
             </li>
@@ -39,9 +39,14 @@
 
     <!-- Actions -->
     <section>
+        <?php if(!$_SESSION['entrance']) :?>
         <ul class="actions stacked">
-            <li><a href="#" class="button large fit">Log In</a></li>
+            <li><a href="../registration.php" class="button large fit">Регистрация</a></li>
         </ul>
+        <ul class="actions stacked">
+            <li><a href="../authorization.php" class="button large fit">Вход</a></li>
+        </ul>
+        <?php endif?>
     </section>
 
 </section>

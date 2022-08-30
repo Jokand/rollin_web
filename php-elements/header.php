@@ -1,14 +1,20 @@
 <header id="header">
-    <h1><a href="index.html">Future Imperfect</a></h1>
+    <h1><a href="index.php">Rollin Kazan</a></h1>
     <nav class="links">
         <ul>
-            <li><a href="#">Lorem</a></li>
-            <li><a href="#">Ipsum</a></li>
-            <li><a href="#">Feugiat</a></li>
-            <li><a href="#">Tempus</a></li>
-            <li><a href="#">Adipiscing</a></li>
+            <li><a href="index.php">Главная</a></li>
+            <li><a href="#">Календарь игр</a></li>
+            <li><a href="#">События</a></li>
+            <li><a href="#">Партнёры</a></li>
+            <?php if ($_SESSION['entrance']) : ?>
+                <li><a href="../profile.php?user_id=<?= $_SESSION['user_id']?>">Личный кабинет</a></li>
+            <?php else : ?>
+                <li><a href="../registration.php">Регистрация</a></li>
+                <li><a href="../authorization.php">Вход</a></li>
+            <?php endif ?>
         </ul>
     </nav>
+    <h1 style="margin-right: 1.2em;"><?= $_SESSION['name']?></h1>
     <nav class="main">
         <ul>
             <li class="search">
