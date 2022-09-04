@@ -2783,7 +2783,7 @@ input, select, textarea {
 				.post > header .meta .published {
 					color: #3c3b3b;
 					display: block;
-					font-family: "Raleway", Helvetica, sans-serif;
+					/* font-family: "Raleway", Helvetica, sans-serif; */
 					font-size: 0.7em;
 					font-weight: 800;
 					letter-spacing: 0.25em;
@@ -3023,7 +3023,7 @@ input, select, textarea {
 	}
 
 	header p {
-		font-family: "Raleway", Helvetica, sans-serif;
+		/* font-family: "Raleway", Helvetica, sans-serif; */
 		font-size: 0.7em;
 		font-weight: 400;
 		letter-spacing: 0.25em;
