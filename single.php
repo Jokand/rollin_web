@@ -12,6 +12,7 @@ if (empty($post)) {
 $post_image = $post['image_path'] == NULL ? '../images/picplug.jpg' : $post['image_path'];
 $delete_url = 'database/delete_post.php?id=' . $post['id'];
 $user = getUserById($post['id_master']);
+$rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_game` = '{$_GET['id']}'")->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <?php include('php-elements/head.php'); ?>
@@ -40,14 +41,57 @@ $user = getUserById($post['id_master']);
 					<div class="meta">
 						<time class="published" datetime="<?= formatDate($post['beginning_game']) ?>"><?= formatDate($post['beginning_game']) ?></time>
 						<time class="published" datetime="<?= formatDate($post['end_game']) ?>"><?= formatDate($post['end_game']) ?></time>
-						<a href="<?= 'profile.php?user_id=' . $post['id_master']; ?>" class="author"><span class="name"><?= $user["name"] ?></span><img src="images/avatar.jpg" alt="" /></a>
+						<a href="<?= 'profile.php?user_id=' . $post['id_master']; ?>" class="author"><span class="name"><?= $user["name"] ?></span><img src=<?= getImageUserPath($post['id_master']) ?> alt="" /></a>
 					</div>
 				</header>
 				<span class="image featured"><img src=<?= $post_image ?> alt="" /></span>
-				<h2>Завязка</h2>
+				<h3 style="margin: 0 0 0.3em 0;">Завязка</h3>
 				<p><?= $post['description'] ?></p>
-				<h2>Примечание</h2>
+				<h3 style="margin: 0 0 0.3em 0;">Примечание</h3>
 				<p><?= $post['remark'] ?></p>
+
+				<? if ($_SESSION['entrance'] && !$rezervation) : ?>
+					<section>
+						<form method="POST" action="database/rezervation.php">
+							<div class="row gtr-uniform">
+								<div class="col-12">
+									<input name="id_post" value='<?= $_GET['id'] ?>' hidden style="display: none;">
+									<ul class="actions">
+										<li><input type="submit" value="Забронировать место" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</section>
+				<? elseif ($rezervation) : ?>
+					<section>
+						<h3 style="margin: 0 0 0.3em 0;">Вы забронировали место</h3>
+						<p><a href=<?="database/cancel_rezervation.php?user_id=".$_SESSION['user_id']?>>Отменить бронь</a></p>
+					</section>
+				<? else : ?>
+					<section>
+						<h3>Чтобы забронировать место вы должны войти или зарегистрироваться</h3>
+					</section>
+				<? endif ?>
+
+
+				<div class="row">
+					<div class="col-6 col-12-medium">
+						<h4>Список участников</h4>
+						<ul>
+							<?
+							$record = getRecordUsersByIdGame($post["id"]);
+							for ($i = 0; $i < count($record); $i++) :
+								$list = $record[$i];
+							?>
+								<li><?= getUserById($record[$i]['id_gamer'])['name'] ?></li>
+							<? endfor; ?>
+						</ul>
+
+
+					</div>
+				</div>
+
 				<footer>
 					<ul class="stats">
 						<li><a href="/index.php">На главную</a></li>
@@ -80,7 +124,7 @@ $user = getUserById($post['id_master']);
 					</section>
 				<? else : ?>
 					<section>
-						<h3>Чтобы комметировать вы должны войти или зарегестрироваться</h3>
+						<h3>Чтобы комметировать вы должны войти или зарегистрироваться</h3>
 					</section>
 				<? endif ?>
 			</article>
@@ -88,17 +132,17 @@ $user = getUserById($post['id_master']);
 			<?php
 			$comms = getCommByIdPost($_GET['id']);
 			for ($i = count($comms); $i > 0; $i--) :
-				$comm = $comms[$i-1];
+				$comm = $comms[$i - 1];
 				$user = getUserById($comm['id_author']);
 				$user_url = 'profile.php?user_id=' . $user['id'];
 			?>
-				<article class="post" style="padding-bottom : 0px;">
+				<article class="post" style="padding-bottom : 0px; margin: 0 0 1em 0">
 					<header style="margin-bottom : 0px;">
 						<div class="title">
-							<p  style="font-size: 0.9em;"><?= $comm['content'] ?></p>
-							
+							<p style="font-size: 0.9em;"><?= $comm['content'] ?></p>
+
 						</div>
-						<div class="meta"  style="padding: 2.5em 3em 1.75em 3em;">
+						<div class="meta" style="padding: 2.5em 3em 1.75em 3em;">
 							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $user['name'] ?></span><img src=<?= getImageUserPath($user['id']) ?> alt="" /></a>
 							<time class="published" datetime="<?= formatDate($comm['date']) ?>"><?= formatDate($comm['date']) ?></time>
 						</div>

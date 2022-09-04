@@ -41,9 +41,8 @@ if (isset($_POST)) {
     }
     if (count($_SESSION['errors']) == 0) {
         $SQL = "INSERT INTO `users`( `name`, `email`, `about_user`, `password`, `link_avatar`) VALUES ('{$name}','{$email}','{$content}','{$hash_password}','{$fileName}')";
-        var_dump($SQL);
         $database->query($SQL);
-        //header('Location: ../index.php');
+        header('Location: ../index.php');
         die();
     };
 };
