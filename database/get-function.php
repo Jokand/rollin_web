@@ -41,9 +41,12 @@ function getRecordUsersByIdGame($id){
 
 //функция изменения формата даты и обрезки текста до определённого колличества слов
 
-function formatDate($str, $date_format='F j, Y'){
-    $date = DateTime::createFromFormat('Y-m-d H:i:s', $str);
-    return $date->format($date_format);
+function formatDate($str, $date_format)
+{
+    $date = new DateTime($str);
+    $intlFormatter = new IntlDateFormatter('ru_RU', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+    $intlFormatter->setPattern($date_format);
+    return $intlFormatter->format($date);
 }
 
 function word_teaser($string, $count){

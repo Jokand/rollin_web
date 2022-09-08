@@ -11,8 +11,9 @@ if (empty($post)) {
 };
 $post_image = $post['image_path'] == NULL ? '../images/picplug.jpg' : $post['image_path'];
 $delete_url = 'database/delete_post.php?id=' . $post['id'];
-$user = getUserById($post['id_master']);
+$master = getUserById($post['id_master']);
 $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_game` = '{$_GET['id']}'")->fetch(PDO::FETCH_ASSOC);
+$record = getRecordUsersByIdGame($post["id"]);
 ?>
 
 <?php include('php-elements/head.php'); ?>
@@ -36,12 +37,14 @@ $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_ga
 				<header>
 					<div class="title">
 						<h2><a href="#"><?= $post['title'] ?></a></h2>
-						<p><?= $post['setting'] . "<br>" . $post['system'] . "<br>" . $post['genre'] ?></p>
+						<p><?= "Сеттинг: " . $post['setting'] . "<br>" . "Система: " . $post['system'] . "<br>" . "Жанр: " . $post['genre'] ?></p>
 					</div>
 					<div class="meta">
-						<time class="published" datetime="<?= formatDate($post['beginning_game']) ?>"><?= formatDate($post['beginning_game']) ?></time>
-						<time class="published" datetime="<?= formatDate($post['end_game']) ?>"><?= formatDate($post['end_game']) ?></time>
-						<a href="<?= 'profile.php?user_id=' . $post['id_master']; ?>" class="author"><span class="name"><?= $user["name"] ?></span><img src=<?= getImageUserPath($post['id_master']) ?> alt="" /></a>
+						
+					<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'dd MMM y'); ?></time>
+							<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'HH:mm') ." - " .  formatDate($post['end_game'], 'HH:mm')?></time>
+
+						<a href="<?= 'profile.php?user_id=' . $post['id_master']; ?>" class="author"><span class="name"><?= $master["name"] ?></span><img src=<?= getImageUserPath($post['id_master']) ?> alt="" /></a>
 					</div>
 				</header>
 				<span class="image featured"><img src=<?= $post_image ?> alt="" /></span>
@@ -49,8 +52,7 @@ $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_ga
 				<p><?= $post['description'] ?></p>
 				<h3 style="margin: 0 0 0.3em 0;">Примечание</h3>
 				<p><?= $post['remark'] ?></p>
-
-				<? if ($_SESSION['entrance'] && !$rezervation) : ?>
+				<? if ($_SESSION['entrance'] && !$rezervation && (count($record) != $post['record'])) : ?>
 					<section>
 						<form method="POST" action="database/rezervation.php">
 							<div class="row gtr-uniform">
@@ -80,11 +82,10 @@ $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_ga
 						<h4>Список участников</h4>
 						<ul>
 							<?
-							$record = getRecordUsersByIdGame($post["id"]);
 							for ($i = 0; $i < count($record); $i++) :
-								$list = $record[$i];
+								$user_record = getUserById($record[$i]['id_gamer']);
 							?>
-								<li><?= getUserById($record[$i]['id_gamer'])['name'] ?></li>
+								<li><a href="<?= 'profile.php?user_id=' . $user_record['id']; ?>"><?= $user_record['name'] ?></a></li>
 							<? endfor; ?>
 						</ul>
 
@@ -95,7 +96,7 @@ $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_ga
 				<footer>
 					<ul class="stats">
 						<li><a href="/index.php">На главную</a></li>
-						<li><a style="font-size: medium;" href="#" class="icon solid fa-users"><?= count(getRecordUsersByIdGame($post["id"])) . "/" . $post['record'] ?></a></li>
+						<li><a style="font-size: medium;" href="#" class="icon solid fa-users"><?= count($record) . "/" . $post['record'] ?></a></li>
 						<li><a style="font-size: medium;" href="#" class="icon solid fa-ruble-sign"><?= $post['price'] ?></a></li>
 						<li><a style="font-size: medium;" href="#" class="icon solid fa-comment"><?= count(getCommByIdPost($post['id'])) ?></a></li>
 					</ul>
@@ -133,8 +134,8 @@ $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_ga
 			$comms = getCommByIdPost($_GET['id']);
 			for ($i = count($comms); $i > 0; $i--) :
 				$comm = $comms[$i - 1];
-				$user = getUserById($comm['id_author']);
-				$user_url = 'profile.php?user_id=' . $user['id'];
+				$author = getUserById($comm['id_author']);
+				$user_url = 'profile.php?user_id=' . $author['id'];
 			?>
 				<article class="post" style="padding-bottom : 0px; margin: 0 0 1em 0">
 					<header style="margin-bottom : 0px;">
@@ -143,8 +144,9 @@ $rezervation = $database->query("SELECT * FROM `list_of_registered` WHERE `id_ga
 
 						</div>
 						<div class="meta" style="padding: 2.5em 3em 1.75em 3em;">
-							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $user['name'] ?></span><img src=<?= getImageUserPath($user['id']) ?> alt="" /></a>
-							<time class="published" datetime="<?= formatDate($comm['date']) ?>"><?= formatDate($comm['date']) ?></time>
+							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $author['name'] ?></span><img src=<?= getImageUserPath($author['id']) ?> alt="" /></a>
+							<time class="published" datetime="<?= $comm['date'] ?>"><?= formatDate($comm['date'], 'd MMMM в hh:mm') ?></time>
+							
 						</div>
 					</header>
 				</article>
