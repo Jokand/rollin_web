@@ -4,8 +4,8 @@
         <?php foreach ($_SESSION['errors'] as $error) : ?>
 
             <div class="error">
-                <br>
                 <?php echo $error; ?>
+                <br>
             </div>
 
         <?php endforeach; ?>

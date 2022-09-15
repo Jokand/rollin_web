@@ -3,7 +3,7 @@
     <nav class="links">
         <ul>
             <li><a href="index.php">Главная</a></li>
-            <li><a href="#">Календарь игр</a></li>
+            <li><a href="calendar.php">Календарь игр</a></li>
             <li><a href="#">События</a></li>
             <li><a href="#">Партнёры</a></li>
             <?php if ($_SESSION['entrance']) : ?>

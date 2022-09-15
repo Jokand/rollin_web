@@ -21,7 +21,7 @@ $posts = getAllPosts();
 
 		<!-- Main -->
 		<div id="main">
-			<h2 style="font-size: 1.7em; display: flex; justify-content: center">Август</h2>
+			<h2 style="font-size: 1.7em; display: flex; justify-content: center"><?="Расписание игр ". formatDate(getdate()["MON"], 'MMMM');?></h2>
 			<?php
 			for ($i = count($posts); $i > 0; $i--) :
 				$post = $posts[$i - 1];

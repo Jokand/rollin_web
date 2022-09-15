@@ -88,8 +88,6 @@ $record = getRecordUsersByIdGame($post["id"]);
 								<li><a href="<?= 'profile.php?user_id=' . $user_record['id']; ?>"><?= $user_record['name'] ?></a></li>
 							<? endfor; ?>
 						</ul>
-
-
 					</div>
 				</div>
 
@@ -141,7 +139,6 @@ $record = getRecordUsersByIdGame($post["id"]);
 					<header style="margin-bottom : 0px;">
 						<div class="title">
 							<p style="font-size: 0.9em;"><?= $comm['content'] ?></p>
-
 						</div>
 						<div class="meta" style="padding: 2.5em 3em 1.75em 3em;">
 							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $author['name'] ?></span><img src=<?= getImageUserPath($author['id']) ?> alt="" /></a>

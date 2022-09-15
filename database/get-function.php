@@ -4,6 +4,11 @@ function getAllPosts(){
     $data = $database->query('SELECT * FROM `games`')->fetchAll(PDO::FETCH_ASSOC);
     return $data;
 }
+function getPostsByMon($mon){
+    global $database;
+    $data = $database->query("SELECT * FROM `games` WHERE MONTH(`beginning_game`) = '{$mon}'")->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
+}
 function getPostById($id){
     global $database;
     $data = $database->query("SELECT * FROM `games` WHERE `id` = '{$id}'")->fetch(PDO::FETCH_ASSOC);
