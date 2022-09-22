@@ -23,28 +23,27 @@ include('database/update-session.php');
                     <form method="POST" action="database/reg.php" enctype="multipart/form-data">
                         <div class="row gtr-uniform">
                             <div class="col-12">
-                                <input type="text" name="name" value=""  minlength="3" maxlength="20" placeholder="*Никнейм" />
+                                <input type="text" name="name" value=""  minlength="3" maxlength="20" placeholder="Логин" />
                             </div>
                             <div class="col-12">
-                                <input type="email" name="email" value="" placeholder="*Email" />
+                                <input type="email" name="email" value="" placeholder="E-mail" />
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <textarea name="content" placeholder="О себе" rows="4"></textarea>
-                            </div>
+                            </div> 
                             <div class="col-12">
                                 <input type="text" name="vk_link" placeholder="Ссылка на ваш профиль в ВКонтакте" />
+                            </div> -->
+                            <div class="col-12">
+                                <input type="password" name="password" value="" minlength="8" placeholder="Пароль" />
                             </div>
                             <div class="col-12">
-                                <input type="password" name="password" value="" minlength="8" placeholder="*Пароль" />
-                            </div>
-                            <div class="col-12">
-                                <input type="password" name="repeat_password" value="" minlength="8" placeholder="*Подтверждение пароля" />
+                                <input type="password" name="repeat_password" value="" minlength="8" placeholder="Повторение пароля" />
                             </div>
                             <div class="col-12">
                                 <h2>Аватар</h2>
                                 <input type="file" accept='image/jpeg,image/png,image/jpg' name="file">
                             </div>
-                            <p>*обязательные поля</p>
                             <?php include('form_errors.php'); ?>
                             <div class="col-12">
                                 <ul class="actions">
@@ -61,5 +60,4 @@ include('database/update-session.php');
     <!-- Scripts -->
     <?php include('php-elements/js-scripts.php'); ?>
 </body>
-
 </html>

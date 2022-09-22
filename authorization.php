@@ -20,7 +20,7 @@ include('database/update-session.php');
                     <form method="POST" action="database/log.php">
                         <div class="row gtr-uniform">
                             <div class="col-12">
-                                <input type="text" name="login" value="" placeholder="Логин или почта" />
+                                <input type="text" name="login" value="" placeholder="Логин или E-mail" />
                             </div>
                             <div class="col-12">
                                 <input type="password" name="password" value="" placeholder="Пароль" />
