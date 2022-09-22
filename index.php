@@ -36,7 +36,7 @@ $posts = getAllPosts();
 						<div class="title">
 							<h2><a href=<?= $post_url; ?>><?= word_teaser($post['title'], 10); ?></a></h2>
 						</div>
-						<div class="meta" style="padding: 2.5em 4em 2em 2em;">
+						<div class="meta">
 
 							<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'dd MMM y'); ?></time>
 							<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'HH:mm') ." - " .  formatDate($post['end_game'], 'HH:mm')?></time>
