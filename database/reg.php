@@ -1,6 +1,5 @@
 <?php
 include('db-connection.php');
-unset($_SESSION['errors']);
 $_SESSION['errors'] = [];
 if (isset($_POST)) {
     $name = $_POST['name'];
@@ -8,12 +7,10 @@ if (isset($_POST)) {
     $content = $_POST['content'];
     $password = $_POST['password'];
     $repeat_password = $_POST['repeat_password'];
-
     $hash_password = password_hash($password, PASSWORD_BCRYPT);
     $user = $database->query("SELECT * FROM `users` WHERE `email` = '{$email}'")->fetch(PDO::FETCH_ASSOC);
-    $fileName = NULL;
-    if (isset($_FILES)) {
-        $fileName = NULL;
+
+    if ($_FILES && $_FILES['file']['size']  > 10) {
         $image = $_FILES['file'];
         $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
         $fileName = uniqid() . '.' . $ext;
@@ -24,10 +21,10 @@ if (isset($_POST)) {
         $fileName = 'uploads/' . $fileName;
     }
 
-    if (trim($name =='')) {
+    if (trim($name == '')) {
         $_SESSION['errors'][] = 'Вы не ввели данные в поле "Имя"';
     }
-    if (trim($email =='')) {
+    if (trim($email == '')) {
         $_SESSION['errors'][] = 'Вы не ввели данные в поле "Email"';
     }
     if (trim(is_array($user))) {
@@ -46,5 +43,4 @@ if (isset($_POST)) {
         die();
     };
 };
-
 header('Location: ../registration.php');
