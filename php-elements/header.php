@@ -1,4 +1,5 @@
 <header id="header">
+    <!-- <img src="images/logo.png" alt="Rollin Kazan"> -->
     <h1><a href="index.php">Rollin Kazan</a></h1>
     <nav class="links">
         <ul>
