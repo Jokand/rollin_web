@@ -140,7 +140,7 @@ $record = getRecordUsersByIdGame($post["id"]);
 						<div class="title">
 							<p style="font-size: 0.9em;"><?= $comm['content'] ?></p>
 						</div>
-						<div class="meta" style="padding: 2.5em 3em 1.75em 3em;">
+						<div class="meta">
 							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $author['name'] ?></span><img src=<?= getImageUserPath($author['id']) ?> alt="" /></a>
 							<time class="published" datetime="<?= $comm['date'] ?>"><?= formatDate($comm['date'], 'd MMMM в hh:mm') ?></time>
 							

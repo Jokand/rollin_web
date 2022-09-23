@@ -1,44 +1,52 @@
 <?php
-function getAllPosts(){
+function getAllPosts()
+{
     global $database;
     $data = $database->query('SELECT * FROM `games`')->fetchAll(PDO::FETCH_ASSOC);
     return $data;
 }
-function getPostsByMon($mon){
+function getPostsByMon($mon)
+{
     global $database;
     $data = $database->query("SELECT * FROM `games` WHERE MONTH(`beginning_game`) = '{$mon}'")->fetchAll(PDO::FETCH_ASSOC);
     return $data;
 }
-function getPostById($id){
+function getPostById($id)
+{
     global $database;
     $data = $database->query("SELECT * FROM `games` WHERE `id` = '{$id}'")->fetch(PDO::FETCH_ASSOC);
     return $data;
 }
-function getUserById($id){
+function getUserById($id)
+{
     global $database;
     $data = $database->query("SELECT * FROM `users` WHERE `id` = '{$id}'")->fetch(PDO::FETCH_ASSOC);
     return $data;
 }
-function getCommByIdPost($id){
+function getCommByIdPost($id)
+{
     global $database;
     $data = $database->query("SELECT * FROM `comments` WHERE `id_game` = '{$id}'")->fetchAll(PDO::FETCH_ASSOC);
     return $data;
 }
-function getImageUserPath($id){
+function getImageUserPath($id)
+{
     $link_avatar = getUserById($id)['link_avatar'];
-    if($link_avatar!=NULL){
+    if ($link_avatar != NULL) {
         return $link_avatar;
-    }else{
-    return "../images/avatar.jpg";
+    } else {
+        return "../images/avatar.jpg";
     }
 }
-function getPostsByIdUser($id){
+function getPostsByIdUser($id)
+{
     global $database;
     $data = $database->query("SELECT * FROM `games` WHERE `id_master` = '{$id}'")->fetchAll(PDO::FETCH_ASSOC);
     return $data;
 }
 
-function getRecordUsersByIdGame($id){
+function getRecordUsersByIdGame($id)
+{
     global $database;
     $data = $database->query("SELECT * FROM `list_of_registered` WHERE `id_game` = '{$id}' AND `application_status` = 'confirmed'")->fetchAll(PDO::FETCH_ASSOC);
     return $data;
@@ -54,7 +62,8 @@ function formatDate($str, $date_format)
     return $intlFormatter->format($date);
 }
 
-function word_teaser($string, $count){
+function word_teaser($string, $count)
+{
     $original_string = $string;
     $words = explode(' ', $original_string);
 
@@ -64,4 +73,18 @@ function word_teaser($string, $count){
     }
 
     return $string;
+}
+//вывод статуса игры на русском
+function status_in_rus($status)
+{
+    switch ($status) {
+        case "unconfirmed":
+            return "Неподтверждена";
+        case "confirmed":
+            return "Подтверждена";
+        case "canceled":
+            return "Отменена";
+        case "event_held":
+            return "Проведена";
+    }
 }
