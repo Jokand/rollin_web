@@ -39,7 +39,7 @@ $user = getUserById($_GET['user_id']);
                             </div>
                             <div class="col-6 col-12-xsmall">
                                 <h2 style="margin: 0.5em 0 0.2em 0;">Ссылка на страницу ВКонтакте</h2>
-                                <input name="vk_link" type="text" value="<?= $user['link_vk'] ?>" placeholder="vk.com/userlink" />
+                                <input name="vk_link" type="URL" value="<?= $user['link_vk'] ?>" placeholder="https://vk.com/userlink" />
                             </div>
                             <div class="col-6 col-12-xsmall" style="margin: 0 0 1.6em 0;">
                                 <h2 style="margin: 0.5em 0 0.2em 0;">E-mail</h2>
