@@ -22,6 +22,9 @@ $posts = getAllPosts();
 		<!-- Main -->
 		<div id="main">
 			<h2 style="font-size: 1.7em; display: flex; justify-content: center"><?="Расписание игр ". formatDate(getdate()["MON"], 'MMMM');?></h2>
+			<? if($_SESSION['role'] == "user" || $_SESSION['role']== "admin") : ?>
+			<a href="claim_game.php" class="button small">Заявить игру</a>
+			<? endif ?>
 			<?php
 			for ($i = count($posts); $i > 0; $i--) :
 				$post = $posts[$i - 1];
