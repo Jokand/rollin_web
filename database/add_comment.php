@@ -12,9 +12,7 @@ if (strlen(trim($message)) == 0) {
 }
 if (count($_SESSION['errors']) == 0) {
     $SQL = "INSERT INTO `comments`( `id_author`, `id_parent`, `content`, `id_game`) VALUES ('{$_SESSION['user_id']}','{$id_parent}','{$message}','{$id_post}')";
-    var_dump($SQL);
     $database->query($SQL);
 };
 header('Location: ../single.php?id='. $id_post);
-
 ?>
