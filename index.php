@@ -1,11 +1,10 @@
-<html>
 <?php
 include('database/db-connection.php');
 include('database/get-function.php');
 include('database/update-session.php');
 $posts = getAllPosts();
 ?>
-
+<html>
 <?php include('php-elements/head.php'); ?>
 
 <body class="is-preload">
@@ -28,7 +27,7 @@ $posts = getAllPosts();
 			<?php
 			for ($i = count($posts); $i > 0; $i--) :
 				$post = $posts[$i - 1];
-				$post_image = $post['image_path'] == NULL ? '../images/picplug.jpg' : $post['image_path'];
+				$post_image = $post['link_to_illustration'] == NULL ? '../images/picplug.jpg' : $post['link_to_illustration'];
 				$post_url = 'single.php?id=' . $post['id'];
 				$user_url = 'profile.php?user_id=' . $post['id_master'];
 				$delete_url = 'database/delete_post.php?id=' . $post['id'];
@@ -40,8 +39,8 @@ $posts = getAllPosts();
 							<h2><a href=<?= $post_url; ?>><?= word_teaser($post['title'], 10); ?></a></h2>
 						</div>
 						<div class="meta">
-
-							<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'dd MMM y'); ?></time>
+						
+							<time class="published" datetime="<?= $post['dategame']?>"><?= formatDate($post['dategame'], 'dd MMM y'); ?></time>
 							<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'HH:mm') ." - " .  formatDate($post['end_game'], 'HH:mm')?></time>
 
 							<a href="<?= $user_url ?>" class="author"><span class="name"><?= $user['name'] ?></span><img src=<?= getImageUserPath($user['id']) ?> alt="" /></a>

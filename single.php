@@ -41,7 +41,7 @@ $record = getRecordUsersByIdGame($post["id"]);
 					</div>
 					<div class="meta">
 						
-					<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'dd MMM y'); ?></time>
+					<time class="published" datetime="<?= $post['dategame']?>"><?= formatDate($post['dategame'], 'dd MMM y'); ?></time>
 							<time class="published" datetime="<?= $post['beginning_game']?>"><?= formatDate($post['beginning_game'], 'HH:mm') ." - " .  formatDate($post['end_game'], 'HH:mm')?></time>
 
 						<a href="<?= 'profile.php?user_id=' . $post['id_master']; ?>" class="author"><span class="name"><?= $master["name"] ?></span><img src=<?= getImageUserPath($post['id_master']) ?> alt="" /></a>
