@@ -2,6 +2,9 @@
 include('database/db-connection.php');
 include('database/get-function.php');
 include('database/update-session.php');
+if($_SESSION['role']=='banned' || $_SESSION['entrance'] == false ){
+    header('Location: ../index.php');
+}
 ?>
 <!DOCTYPE html>
 <?php include('php-elements/head.php'); ?>
@@ -18,10 +21,10 @@ include('database/update-session.php');
             <article class="post">
                 <section>
                     <h2>Заявить игру</h2>
-                    <form method="POST" action="database/claim_game_bd.php">
+                    <form method="POST" action="database/claim_game_bd.php" enctype="multipart/form-data">
                         <div class="row gtr-uniform">
                             <div class="col-12">
-                                <input type="text" name="title" value="" placeholder="Название игры" />
+                                <input type="text" name="title" value="" minlength="3" maxlength="50" placeholder="Название игры" />
                             </div>
                             <div class="col-12">
                                 <h3>Загрузить иллюстрацию</h3>
@@ -29,25 +32,30 @@ include('database/update-session.php');
                             </div>
 
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="setting" id="" value="" placeholder="Сеттинг" />
+                                <input type="text" name="setting" id="" value="" minlength="1" maxlength="15" placeholder="Сеттинг" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="system" id="" value="" placeholder="Система" />
+                                <input type="text" name="system" id="" value="" minlength="1" maxlength="15"  placeholder="Система" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="genre" id="" value="" placeholder="Жанр" />
+                                <input type="text" name="genre" id="" value="" minlength="1" maxlength="15"  placeholder="Жанр" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <select name="loc" id="">
-                                    <option value="1">Оффлайн</option>
-                                    <option value="2">Онлайн</option>
+                                <select name="environment" id="">
+                                    <option value="offline">Офлайн</option>
+                                    <option value="online">Онлайн</option>
                                 </select>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="location" id="" value="" placeholder="Место проведения" />
+                                <input type="text" minlength="1" maxlength="100"  name="location" id="" value="" placeholder="Место проведения" />
                             </div>
                             <div class="col-12">
-                                <input type="number" name="price" id="" value="" placeholder="Цена с человека" />
+                                <h3>Количество человек</h3>
+                                <input type="number" name="record" minlength="1" maxlength="15" id="" value="" placeholder="Количество человек" />
+                            </div>
+                            <div class="col-12">
+                                <h3>Цена с человека</h3>
+                                <input type="number" name="price" minlength="0" maxlength="9999" id="" value="" placeholder="Цена с человека" />
                             </div>
                             <div class="col-12">
                                 <h3>Дата и время начала и конца игры</h3>
@@ -63,7 +71,7 @@ include('database/update-session.php');
                             </div>
                             <div class="col-12">
                                 <h2 style="margin: 0.5em 0 0.2em 0;">Описание</h2>
-                                <textarea name="description" maxlength="500" placeholder="Описание игры" rows="3"?></textarea>
+                                <textarea name="description" minlength="10" maxlength="500" placeholder="Описание игры" rows="3"?></textarea>
                             </div>
                             <div class="col-12">
                                 <h2 style="margin: 0.5em 0 0.2em 0;">Примечание</h2>
