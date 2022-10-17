@@ -5,6 +5,12 @@ function getAllPosts()
     $data = $database->query('SELECT * FROM `games`')->fetchAll(PDO::FETCH_ASSOC);
     return $data;
 }
+function getPostsByStatus($status)
+{
+    global $database;
+    $data = $database->query("SELECT * FROM `games` WHERE `status` = '{$status}'")->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
+}
 function getPostsByMon($mon)
 {
     global $database;
