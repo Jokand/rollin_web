@@ -4,18 +4,23 @@
     <nav class="links">
         <ul>
             <li><a href="index.php">Главная</a></li>
-            <li><a href="calendar.php">Календарь игр</a></li>
+            <li><a href="calendar.php">Календарь</a></li>
             <li><a href="#">События</a></li>
             <li><a href="#">Партнёры</a></li>
             <?php if ($_SESSION['entrance']) : ?>
-                <li><a href="../profile.php?user_id=<?= $_SESSION['user_id']?>">Личный кабинет</a></li>
+                <li><a href="../profile.php?user_id=<?= $_SESSION['user_id'] ?>">Личный кабинет</a></li>
             <?php else : ?>
                 <li><a href="../registration.php">Регистрация</a></li>
                 <li><a href="../authorization.php">Вход</a></li>
+            <?php endif;
+            if ($_SESSION['role'] == 'admin') : ?>
+          
+                <li><a href="../admin_panel.php">Админ. панель</a></li>
             <?php endif ?>
         </ul>
     </nav>
-    <h1 style="margin-right: 1.2em;"><?= $_SESSION['name']?></h1>
+    <h1 style="margin-right: 1.2em;"><?= $_SESSION['name'] ?></h1>
+
     <nav class="main">
         <ul>
             <li class="search">

@@ -43,7 +43,7 @@ $user = getUserById($_GET['user_id']);
                             </div>
                             <div class="col-6 col-12-xsmall" style="margin: 0 0 1.6em 0;">
                                 <h2 style="margin: 0.5em 0 0.2em 0;">E-mail</h2>
-                                <input disabled type="email" name="demo-email" id="demo-email" value="<?= $_SESSION['email'] ?>" placeholder="Email" />
+                                <input disabled type="email" name="email" id="email" value="<?= $_SESSION['email'] ?>" placeholder="Email" />
                             </div>
                 </section>
                 <?php include('form_errors.php'); ?>
@@ -61,7 +61,7 @@ $user = getUserById($_GET['user_id']);
                 <div class="table-wrapper">
                     <table class="alt">
                         <?php
-                        $held_games = $database->query("SELECT `id`, `title`, `system`, `beginning_game`, `end_game`, `status`  FROM `games` WHERE `id_master` = '{$_GET['user_id']}'")->fetchAll(PDO::FETCH_ASSOC);
+                        $held_games = $database->query("SELECT `id`, `title`, `system`, `dategame`, `beginning_game`, `end_game`, `status`  FROM `games` WHERE `id_master` = '{$_GET['user_id']}'")->fetchAll(PDO::FETCH_ASSOC);
                         if (!empty($held_games)) :
                         ?>
                             <thead>
@@ -77,7 +77,7 @@ $user = getUserById($_GET['user_id']);
                                     <tr>
                                         <td><a href="<?= 'single.php?id=' . $held_game['id'] ?>"><?= $held_game['title']; ?></a></td>
                                         <td><?= $held_game['system']; ?></td>
-                                        <td><time class="published" datetime="<?= $held_game['beginning_game'] ?>"><?= formatDate($held_game['beginning_game'], 'dd MMM y'); ?></time>
+                                        <td><time class="published" datetime="<?= $held_game['dategame'] ?>"><?= formatDate($held_game['dategame'], 'dd MMM y'); ?></time>
                                             <time class="published" datetime="<?= $held_game['beginning_game'] ?>"><?= formatDate($held_game['beginning_game'], 'HH:mm') . " - " .  formatDate($held_game['end_game'], 'HH:mm') ?></time>
                                         </td>
                                         <td><?= status_in_rus($held_game['status']); ?></td>
@@ -106,12 +106,12 @@ $user = getUserById($_GET['user_id']);
                                 </tr>
                             </thead>
                             <? foreach ($id_games as $id_game) :
-                                $participation_game = $database->query("SELECT `id`, `title`, `system`, `beginning_game`, `end_game`, `status`  FROM `games` WHERE `id` = '{$id_game['id_game']}'")->fetch(PDO::FETCH_ASSOC);  ?>
+                                $participation_game = $database->query("SELECT `id`, `title`, `system`, `dategame`, `beginning_game`, `end_game`, `status`  FROM `games` WHERE `id` = '{$id_game['id_game']}'")->fetch(PDO::FETCH_ASSOC);  ?>
                                 <tbody>
                                     <tr>
                                         <td><a href="<?= 'single.php?id=' . $participation_game['id'] ?>"><?= $participation_game['title']; ?></a></td>
                                         <td><?= $participation_game['system']; ?></td>
-                                        <td><time class="published" datetime="<?= $participation_game['beginning_game'] ?>"><?= formatDate($participation_game['beginning_game'], 'dd MMM y'); ?></time>
+                                        <td><time class="published" datetime="<?= $participation_game['dategame'] ?>"><?= formatDate($participation_game['dategame'], 'dd MMM y'); ?></time>
                                             <time class="published" datetime="<?= $participation_game['beginning_game'] ?>"><?= formatDate($participation_game['beginning_game'], 'HH:mm') . " - " .  formatDate($participation_game['end_game'], 'HH:mm') ?></time>
                                         </td>
                                         <td><?= status_in_rus($participation_game['status']); ?></td>

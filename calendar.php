@@ -5,10 +5,10 @@ include('database/get-function.php');
 include('database/update-session.php');
 //$posts = getAllPosts();
 //$date = $_GET['mon'] ?  $_GET['mon'] : getdate();
-$date = new DateTime(getdate()["MON"]);
+//$date = new DateTime(getdate()["MON"]);
 //$date-> strtotime('-1 month');
-var_dump($date["date"]);
-$posts = getPostsByMon(formatDate($date['date'], 'M'));
+//var_dump($date["date"]);
+//$posts = getPostsByMon(formatDate($date['date'], 'M'));
 ?>
 
 <?php include('php-elements/head.php'); ?>

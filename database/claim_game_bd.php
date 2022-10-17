@@ -19,7 +19,7 @@ if (isset($_POST)) {
     $remark = $_POST['remark'];
     $id_master = $_SESSION['user_id'];
 
-    if ($_FILES && $_FILES['file']['size']  > 10) {
+    if ($_FILES && $_FILES['file']['name']!=null) {
         $image = $_FILES['file'];
         $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
         $fileName = uniqid() . '.' . $ext;

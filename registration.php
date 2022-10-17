@@ -28,12 +28,6 @@ include('database/update-session.php');
                             <div class="col-12">
                                 <input type="email" name="email" value="" placeholder="E-mail" />
                             </div>
-                            <!-- <div class="col-12">
-                                <textarea name="content" placeholder="О себе" rows="4"></textarea>
-                            </div> 
-                            <div class="col-12">
-                                <input type="text" name="vk_link" placeholder="Ссылка на ваш профиль в ВКонтакте" />
-                            </div> -->
                             <div class="col-12">
                                 <input type="password" name="password" value="" minlength="8" placeholder="Пароль" />
                             </div>

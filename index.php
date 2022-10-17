@@ -2,7 +2,7 @@
 include('database/db-connection.php');
 include('database/get-function.php');
 include('database/update-session.php');
-$posts = getAllPosts();
+$posts = getPostsByStatus('confirmed');
 ?>
 <html>
 <?php include('php-elements/head.php'); ?>
